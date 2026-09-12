@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
@@ -36,6 +37,7 @@ switch(command)
         var flag = args.Skip(1).ToString() ?? "";
         var hash = args.Skip(2).ToString() ?? "";
 
+        Console.WriteLine($"cat-file: {flag}");
         if (!flag.Equals("-p"))
         {
             throw new ArgumentException("cat-file only supports the '-p' flag");
@@ -43,7 +45,9 @@ switch(command)
 
         var parentDir = hash.Take(2).ToString();
         var remaining = hash.Skip(2).ToString();
-        
+
+        Debug.Assert(remaining != null, nameof(remaining) + " != null");
+        Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
         DecompressFile(Path.Combine(Path.Combine(objectsDirectory,parentDir),remaining));
         break;
     }
