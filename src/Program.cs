@@ -40,8 +40,11 @@ switch(command)
         {
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
-       
-        DecompressFile(Path.Combine(objectsDirectory, hash));
+
+        var parentDir = hash.Take(2).ToString();
+        var remaining = hash.Skip(2).ToString();
+        
+        DecompressFile(Path.Combine(Path.Combine(objectsDirectory,parentDir),remaining));
         break;
     }
     default :
