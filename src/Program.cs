@@ -1,5 +1,8 @@
 using System;
 using System.IO;
+using System.IO.Compression;
+
+const string objectsDirectory = ".git/objects";
 
 if (args.Length < 1)
 {
@@ -12,17 +15,46 @@ Console.Error.WriteLine("Logs from your program will appear here!");
 
 string command = args[0];
 
-if (command == "init")
+switch(command)
 {
-    // TODO: Uncomment the code below to pass the first stage
-    //
-    Directory.CreateDirectory(".git");
-    Directory.CreateDirectory(".git/objects");
-    Directory.CreateDirectory(".git/refs");
-    File.WriteAllText(".git/HEAD", "ref: refs/heads/main\n");
-    Console.WriteLine("Initialized git directory");
+    case "init":
+    {
+        Directory.CreateDirectory(".git");
+        Directory.CreateDirectory(objectsDirectory);
+        Directory.CreateDirectory(".git/refs");
+        File.WriteAllText(".git/HEAD", "ref: refs/heads/main\n");
+        Console.WriteLine("Initialized git directory");
+        break;
+    }
+    case "cat-file":
+    {
+        if (args.Length != 3)
+        {
+            throw new ArgumentException("cat-file requires 2 arguments");
+        }
+
+        var flag = args.Skip(1).ToString() ?? "";
+        var hash = args.Skip(2).ToString() ?? "";
+
+        if (!flag.Equals("-p"))
+        {
+            throw new ArgumentException("cat-file only supports the '-p' flag");
+        }
+       
+        DecompressFile(Path.Combine(objectsDirectory, hash));
+        break;
+    }
+    default :
+        throw new ArgumentException($"Unknown command {command}");
 }
-else
+
+void DecompressFile(string compressedFile)
 {
-    throw new ArgumentException($"Unknown command {command}");
+    using (FileStream compressedStream = File.OpenRead(compressedFile))
+    using (ZLibStream decompressionStream = new ZLibStream(compressedStream, CompressionMode.Decompress))
+    using (StreamReader reader = new StreamReader(decompressionStream))
+    {
+        string fileContents = reader.ReadToEnd();
+        Console.WriteLine(fileContents);
+    }
 }
