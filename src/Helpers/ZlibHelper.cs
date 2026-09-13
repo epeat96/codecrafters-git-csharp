@@ -30,6 +30,9 @@ public static class ZlibHelper
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
             writer.Write(BlobFileHelper.GetBlobContentFromFile(filePath));
+            writer.Close();
+            compressionStream.Close();
+            compressedStream.Close();
         }
 
         Console.Write(hash);
