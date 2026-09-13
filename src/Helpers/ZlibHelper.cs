@@ -24,7 +24,7 @@ public static class ZlibHelper
         var filePath = Path.Combine(parentDirPath, fileName);
 
         Directory.CreateDirectory(parentDirPath);
-        using FileStream compressedStream = File.OpenWrite(Path.Combine(parentDirPath, filePath));
+        using FileStream compressedStream = File.OpenWrite(filePath);
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
