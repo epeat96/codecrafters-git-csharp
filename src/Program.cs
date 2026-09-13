@@ -67,7 +67,7 @@ void DecompressFile(string compressedFile)
     using (ZLibStream decompressionStream = new ZLibStream(compressedStream, CompressionMode.Decompress))
     using (StreamReader reader = new StreamReader(decompressionStream))
     {
-        string fileContents = reader.ReadToEnd();
+        string fileContents = reader.ReadToEnd().Split('\0').Skip(1).First();
         Console.WriteLine(fileContents);
     }
 }
