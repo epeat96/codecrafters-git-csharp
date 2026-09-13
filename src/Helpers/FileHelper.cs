@@ -15,10 +15,10 @@ public static class FileHelper
         return Convert.ToHexString(hashBytes);
     }
 
-    public static byte[] GetFileContent(string filePath)
+    public static string GetFileContent(string filePath)
     {
         if (!File.Exists(filePath)) throw new FileNotFoundException("File not found.", filePath);
 
-        return File.ReadAllBytes(filePath);
+        return File.ReadAllText(filePath);
     }
 }

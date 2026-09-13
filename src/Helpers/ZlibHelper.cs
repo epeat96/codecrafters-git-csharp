@@ -15,7 +15,7 @@ public static class ZlibHelper
         }
     }
 
-    public static void CompressFile(string hash, string objectDirPath, byte[] content)
+    public static void CompressFile(string hash, string objectDirPath, string content)
     {
         var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
         var fileName = BlobPathHelper.GetFileNameFromHash(hash);
@@ -28,7 +28,7 @@ public static class ZlibHelper
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
-            writer.Write($"blob {content.Length}\0{content}");
+            writer.Write($"blob {content.Length * sizeof(char)}\0{content}");
         }
 
         Console.Write(hash);
