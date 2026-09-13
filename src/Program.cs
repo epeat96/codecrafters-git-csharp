@@ -47,10 +47,8 @@ switch (command)
         }
 
         var parentDir = sb.AppendJoin("", hash.First(), hash.Skip(1).First()).ToString();
-        Console.WriteLine($"ParentDir: {parentDir}");
         sb = sb.Clear();
         var remaining = sb.AppendJoin("", hash.Skip(2)).ToString();
-        Console.WriteLine($"Remaining: {remaining}");
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
@@ -68,6 +66,6 @@ void DecompressFile(string compressedFile)
     using (StreamReader reader = new StreamReader(decompressionStream))
     {
         string fileContents = reader.ReadToEnd().Split('\0').Skip(1).First();
-        Console.WriteLine(fileContents);
+        Console.Write(fileContents);
     }
 }
