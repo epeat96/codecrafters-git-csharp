@@ -46,8 +46,8 @@ switch (command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
-        var remaining = BlobPathHelper.GetFileNameFromHash(hash);
+        var parentDir = BlobFileHelper.GetParentDirFromHash(hash);
+        var remaining = BlobFileHelper.GetFileNameFromHash(hash);
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
@@ -70,8 +70,8 @@ switch (command)
             throw new ArgumentException("hash-object only supports the '-w' flag");
         }
 
-        var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
-        var remaining = BlobPathHelper.GetFileNameFromHash(hash);
+        var parentDir = BlobFileHelper.GetParentDirFromHash(hash);
+        var remaining = BlobFileHelper.GetFileNameFromHash(hash);
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");

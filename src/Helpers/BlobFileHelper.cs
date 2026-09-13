@@ -2,7 +2,7 @@ using System.Text;
 
 namespace codecrafters_git.Helpers;
 
-public static class BlobPathHelper
+public static class BlobFileHelper
 {
     public static string GetParentDirFromHash(string hash)
     {
@@ -14,5 +14,11 @@ public static class BlobPathHelper
     {
         var sb = new StringBuilder();
         return sb.AppendJoin("", hash.Skip(2)).ToString();
+    }
+
+    public static string GetBlobContentFromFile(string filePath)
+    {
+        var content = FileHelper.GetFileContent(filePath);
+        return $"blob {content.Length}\0{content}";
     }
 }

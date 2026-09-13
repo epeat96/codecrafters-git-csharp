@@ -9,8 +9,8 @@ public static class FileHelper
         if (!File.Exists(filePath)) throw new FileNotFoundException("File not found.", filePath);
 
         using var sha1 = SHA1.Create();
-        using var stream = File.OpenRead(filePath);
-        byte[] hashBytes = sha1.ComputeHash(stream);
+        var bytes = BlobFileHelper.GetBlobContentFromFile(filePath).Select(c => Convert.ToByte(c)).ToArray();
+        byte[] hashBytes = sha1.ComputeHash(bytes);
 
         return Convert.ToHexString(hashBytes);
     }
