@@ -48,7 +48,7 @@ switch (command)
 
         var parentDir = sb.Append(hash.First(), hash.Skip(1).First()).ToString();
         sb = sb.Clear();
-        var remaining = sb.Append(hash.Skip(2)).ToString();
+        var remaining = sb.Insert(0, hash.Skip(2)).ToString();
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
