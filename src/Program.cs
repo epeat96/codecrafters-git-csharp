@@ -46,7 +46,7 @@ switch(command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = sb.AppendJoin("/",hash.First(),hash.Skip(1).First()).ToString();
+        var parentDir = sb.Append(hash.First(),hash.Skip(1).First()).ToString();
         sb.Clear();
         var remaining = sb.Append(hash.Skip(2)).ToString();
 
