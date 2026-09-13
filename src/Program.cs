@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Text;
 using System.Xml;
+using codecrafters_git.Helpers;
 
 const string objectsDirectory = ".git/objects";
 
@@ -46,26 +46,39 @@ switch (command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = sb.AppendJoin("", hash.First(), hash.Skip(1).First()).ToString();
-        sb = sb.Clear();
-        var remaining = sb.AppendJoin("", hash.Skip(2)).ToString();
+        var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
+        var remaining = BlobPathHelper.GetFileDirFromHash(hash);
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
-        DecompressFile(Path.Combine(Path.Combine(objectsDirectory, parentDir), remaining));
+        ZlibHelper.DecompressFile(Path.Combine(Path.Combine(objectsDirectory, parentDir), remaining));
+        break;
+    }
+    case "hash-object":
+    {
+        if (args.Length != 3)
+        {
+            throw new ArgumentException("cat-file requires 2 arguments");
+        }
+
+        var flag = args.Skip(1).First();
+        var filePath = args.Skip(2).First();
+        var hash = FileHelper.ComputeSha1(filePath);
+
+        if (!flag.Equals("-p"))
+        {
+            throw new ArgumentException("cat-file only supports the '-p' flag");
+        }
+
+        var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
+        var remaining = BlobPathHelper.GetFileDirFromHash(hash);
+
+        Debug.Assert(remaining != null, nameof(remaining) + " != null");
+        Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
+        ZlibHelper.CompressFile(Path.Combine(Path.Combine(objectsDirectory, parentDir), remaining),
+            FileHelper.GetFileContent(filePath));
         break;
     }
     default:
         throw new ArgumentException($"Unknown command {command}");
-}
-
-void DecompressFile(string compressedFile)
-{
-    using (FileStream compressedStream = File.OpenRead(compressedFile))
-    using (ZLibStream decompressionStream = new ZLibStream(compressedStream, CompressionMode.Decompress))
-    using (StreamReader reader = new StreamReader(decompressionStream))
-    {
-        string fileContents = reader.ReadToEnd().Split('\0').Skip(1).First();
-        Console.Write(fileContents);
-    }
 }
