@@ -2,8 +2,12 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
+using System.Xml;
 
 const string objectsDirectory = ".git/objects";
+
+StringBuilder sb = new(); 
 
 if (args.Length < 1)
 {
@@ -34,8 +38,8 @@ switch(command)
             throw new ArgumentException("cat-file requires 2 arguments");
         }
 
-        var flag = args.ToList().Skip(1).ToString() ?? "";
-        var hash = args.ToList().Skip(2).ToString() ?? "";
+        var flag = args.ToList().Skip(1).First();
+        var hash = args.ToList().Skip(2).First();
 
         Console.WriteLine($"cat-file: {flag}");
         if (!flag.Equals("-p"))
