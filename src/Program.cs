@@ -49,7 +49,7 @@ switch (command)
         var parentDir = sb.AppendJoin("", hash.First(), hash.Skip(1).First()).ToString();
         Console.WriteLine($"ParentDir: {parentDir}");
         sb = sb.Clear();
-        var remaining = sb.AppendJoin(hash.Skip(2)).ToString();
+        var remaining = sb.AppendJoin("", hash.Skip(2)).ToString();
         Console.WriteLine($"Remaining: {remaining}");
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
