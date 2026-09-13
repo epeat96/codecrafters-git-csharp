@@ -38,16 +38,15 @@ switch(command)
             throw new ArgumentException("cat-file requires 2 arguments");
         }
 
-        var flag = args.ToList().Skip(1).First();
-        var hash = args.ToList().Skip(2).First();
+        var flag = args.Skip(1).First();
+        var hash = args.Skip(2).First();
 
-        Console.WriteLine($"cat-file: {flag}");
         if (!flag.Equals("-p"))
         {
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = sb.Append(hash.First(),hash.Skip(1).First()).ToString();
+        var parentDir = sb.AppendJoin("/",hash.First(),hash.Skip(1).First()).ToString();
         sb.Clear();
         var remaining = sb.Append(hash.Skip(2)).ToString();
 
