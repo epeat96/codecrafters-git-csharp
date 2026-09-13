@@ -15,9 +15,10 @@ public static class ZlibHelper
         }
     }
 
-    public static void CompressFile(string compressedFilePath, byte[] content)
+    public static void CompressFile(string parentDirPath, string fileName, byte[] content)
     {
-        using FileStream compressedStream = File.OpenWrite(compressedFilePath);
+        Directory.CreateDirectory(parentDirPath);
+        using FileStream compressedStream = File.OpenWrite(Path.Combine(parentDirPath, fileName));
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
