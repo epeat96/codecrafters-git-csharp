@@ -20,7 +20,7 @@ public static class ZlibHelper
         var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
         var fileName = BlobPathHelper.GetFileNameFromHash(hash);
 
-        var parentDirPath = Path.Combine(objectDirPath, fileName);
+        var parentDirPath = Path.Combine(objectDirPath, parentDir);
         var filePath = Path.Combine(parentDirPath, fileName);
 
         Directory.CreateDirectory(parentDirPath);
