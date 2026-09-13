@@ -47,8 +47,9 @@ switch(command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = hash.ToList().Take(2).ToString();
-        var remaining = hash.ToList().Skip(2).ToString();
+        var parentDir = sb.Append(hash.First(),hash.Skip(1).First()).ToString();
+        sb.Clear();
+        var remaining = sb.Append(hash.Skip(2)).ToString();
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
