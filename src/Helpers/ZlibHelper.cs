@@ -21,7 +21,7 @@ public static class ZlibHelper
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
-            writer.Write($"blob {content.Length)}\0{content}");
+            writer.Write($"blob {content.Length}\0{content}");
         }
     }
 }
