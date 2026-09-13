@@ -75,7 +75,7 @@ switch (command)
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
-        ZlibHelper.CompressFile(parentDir, remaining, FileHelper.GetFileContent(filePath));
+        ZlibHelper.CompressFile(hash, objectsDirectory, FileHelper.GetFileContent(filePath));
         break;
     }
     default:
