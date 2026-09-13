@@ -21,7 +21,7 @@ public static class ZlibHelper
         var fileName = BlobPathHelper.GetFileNameFromHash(hash);
 
         var parentDirPath = Path.Combine(objectDirPath, fileName);
-        var filePath = Path.Combine(objectDirPath, fileName);
+        var filePath = Path.Combine(parentDirPath, fileName);
 
         Directory.CreateDirectory(parentDirPath);
         using FileStream compressedStream = File.OpenWrite(Path.Combine(parentDirPath, filePath));
