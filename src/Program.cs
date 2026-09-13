@@ -65,9 +65,9 @@ switch (command)
         var filePath = args.Skip(2).First();
         var hash = FileHelper.ComputeSha1(filePath);
 
-        if (!flag.Equals("-p"))
+        if (!flag.Equals("-w"))
         {
-            throw new ArgumentException("cat-file only supports the '-p' flag");
+            throw new ArgumentException("hash-object only supports the '-w' flag");
         }
 
         var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
