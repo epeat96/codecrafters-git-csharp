@@ -7,7 +7,7 @@ using System.Xml;
 
 const string objectsDirectory = ".git/objects";
 
-StringBuilder sb = new(); 
+StringBuilder sb = new();
 
 if (args.Length < 1)
 {
@@ -20,7 +20,7 @@ Console.Error.WriteLine("Logs from your program will appear here!");
 
 string command = args[0];
 
-switch(command)
+switch (command)
 {
     case "init":
     {
@@ -46,16 +46,16 @@ switch(command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = sb.Append(hash.First(),hash.Skip(1).First()).ToString();
-        sb.Clear();
+        var parentDir = sb.Append(hash.First(), hash.Skip(1).First()).ToString();
+        sb = sb.Clear();
         var remaining = sb.Append(hash.Skip(2)).ToString();
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
-        DecompressFile(Path.Combine(Path.Combine(objectsDirectory,parentDir),remaining));
+        DecompressFile(Path.Combine(Path.Combine(objectsDirectory, parentDir), remaining));
         break;
     }
-    default :
+    default:
         throw new ArgumentException($"Unknown command {command}");
 }
 
