@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using System.Runtime.Serialization;
 
 namespace codecrafters_git.Helpers;
 
@@ -28,7 +29,7 @@ public static class ZlibHelper
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
-            writer.Write($"blob {content.Length * sizeof(char)}\0{content}");
+            writer.Write($"blob {content.Length}\0{content}");
         }
 
         Console.Write(hash);
