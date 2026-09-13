@@ -34,8 +34,8 @@ switch(command)
             throw new ArgumentException("cat-file requires 2 arguments");
         }
 
-        var flag = args.Skip(1).ToString() ?? "";
-        var hash = args.Skip(2).ToString() ?? "";
+        var flag = args.ToList().Skip(1).ToString() ?? "";
+        var hash = args.ToList().Skip(2).ToString() ?? "";
 
         Console.WriteLine($"cat-file: {flag}");
         if (!flag.Equals("-p"))
@@ -43,8 +43,8 @@ switch(command)
             throw new ArgumentException("cat-file only supports the '-p' flag");
         }
 
-        var parentDir = hash.Take(2).ToString();
-        var remaining = hash.Skip(2).ToString();
+        var parentDir = hash.ToList().Take(2).ToString();
+        var remaining = hash.ToList().Skip(2).ToString();
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
