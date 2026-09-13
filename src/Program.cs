@@ -47,7 +47,7 @@ switch (command)
         }
 
         var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
-        var remaining = BlobPathHelper.GetFileDirFromHash(hash);
+        var remaining = BlobPathHelper.GetFileNameFromHash(hash);
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");
@@ -71,7 +71,7 @@ switch (command)
         }
 
         var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
-        var remaining = BlobPathHelper.GetFileDirFromHash(hash);
+        var remaining = BlobPathHelper.GetFileNameFromHash(hash);
 
         Debug.Assert(remaining != null, nameof(remaining) + " != null");
         Debug.Assert(parentDir != null, nameof(parentDir) + " != null");

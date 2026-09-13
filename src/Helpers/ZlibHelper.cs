@@ -15,14 +15,22 @@ public static class ZlibHelper
         }
     }
 
-    public static void CompressFile(string parentDirPath, string fileName, byte[] content)
+    public static void CompressFile(string hash, string objectDirPath, byte[] content)
     {
+        var parentDir = BlobPathHelper.GetParentDirFromHash(hash);
+        var fileName = BlobPathHelper.GetFileNameFromHash(hash);
+
+        var parentDirPath = Path.Combine(objectDirPath, fileName);
+        var filePath = Path.Combine(objectDirPath, fileName);
+
         Directory.CreateDirectory(parentDirPath);
-        using FileStream compressedStream = File.OpenWrite(Path.Combine(parentDirPath, fileName));
+        using FileStream compressedStream = File.OpenWrite(Path.Combine(parentDirPath, filePath));
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
             writer.Write($"blob {content.Length}\0{content}");
         }
+
+        Console.Write(hash);
     }
 }

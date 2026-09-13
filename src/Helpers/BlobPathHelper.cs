@@ -10,7 +10,7 @@ public static class BlobPathHelper
         return sb.AppendJoin("", hash.First(), hash.Skip(1).First()).ToString();
     }
 
-    public static string GetFileDirFromHash(string hash)
+    public static string GetFileNameFromHash(string hash)
     {
         var sb = new StringBuilder();
         return sb.AppendJoin("", hash.Skip(2)).ToString();
