@@ -12,7 +12,7 @@ public static class FileHelper
         var bytes = BlobFileHelper.GetBlobContentFromFile(filePath).Select(c => Convert.ToByte(c)).ToArray();
         byte[] hashBytes = sha1.ComputeHash(bytes);
 
-        return Convert.ToHexString(hashBytes);
+        return Convert.ToHexStringLower(hashBytes);
     }
 
     public static string GetFileContent(string filePath)
