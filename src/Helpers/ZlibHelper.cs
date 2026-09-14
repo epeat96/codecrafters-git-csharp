@@ -24,12 +24,14 @@ public static class ZlibHelper
         var parentDirPath = Path.Combine(objectDirPath, parentDir);
         var filePath = Path.Combine(parentDirPath, fileName);
 
+        var fileContent = BlobFileHelper.GetBlobContentFromFile(filePath);
+
         Directory.CreateDirectory(parentDirPath);
-        using FileStream compressedStream = File.OpenWrite(filePath);
+        using FileStream compressedStream = File.Create(filePath);
         using (ZLibStream compressionStream = new ZLibStream(compressedStream, CompressionMode.Compress))
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
-            writer.Write(BlobFileHelper.GetBlobContentFromFile(filePath));
+            writer.Write(fileContent);
         }
 
         Console.Write(hash);
