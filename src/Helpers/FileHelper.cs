@@ -19,6 +19,7 @@ public static class FileHelper
     {
         if (!File.Exists(filePath)) throw new FileNotFoundException("File not found.", filePath);
 
-        return File.ReadAllText(filePath);
+        var fileText = File.ReadAllText(filePath);
+        return fileText;
     }
 }
