@@ -13,9 +13,6 @@ public static class ZlibHelper
         {
             string fileContents = reader.ReadToEnd().Split('\0').Skip(1).First();
             Console.Write(fileContents);
-            compressedStream.Close();
-            decompressionStream.Close();
-            reader.Close();
         }
     }
 
@@ -33,9 +30,6 @@ public static class ZlibHelper
         using (StreamWriter writer = new StreamWriter(compressionStream))
         {
             writer.Write(BlobFileHelper.GetBlobContentFromFile(filePath));
-            writer.Close();
-            compressionStream.Close();
-            compressedStream.Close();
         }
 
         Console.Write(hash);
